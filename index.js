@@ -43,7 +43,7 @@ function getHealthValue(status) {
 
 // Define Custom Metrics
 const prefix = 'megarack_';
-const metricLabels = ['manufacturer', 'model'];
+const metricLabels = ['manufacturer', 'system_model', 'cpu_model', 'cpu_count'];
 
 const gSystemHealth = new client.Gauge({ name: prefix + 'system_health', help: 'System Health (1=OK, 0.5=Warning, 0=Critical, -1=Unknown)', labelNames: metricLabels, registers: [register] });
 const gCpuCount = new client.Gauge({ name: prefix + 'cpu_count', help: 'CPU Count', labelNames: metricLabels, registers: [register] });
@@ -207,7 +207,12 @@ app.get('/api/server-summary', async (req, res) => {
 app.get('/metrics', async (req, res) => {
   try {
     const data = await fetchServerSummaryData();
-    const lbls = { manufacturer: data.system_manufacturer, model: data.system_model };
+    const lbls = { 
+      manufacturer: data.system_manufacturer, 
+      system_model: data.system_model,
+      cpu_model: data.cpu_model,
+      cpu_count: data.cpu_count.toString()
+    };
 
     // Update Gauges
     gSystemHealth.set(lbls, getHealthValue(data.system_health));
