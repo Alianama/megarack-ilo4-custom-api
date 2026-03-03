@@ -14,7 +14,7 @@ RUN npm install --production
 COPY . .
 
 # Expose port
-EXPOSE 3000
+EXPOSE 3030
 
 # Jalankan app
 CMD ["node", "index.js"]
