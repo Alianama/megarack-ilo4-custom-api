@@ -11,9 +11,10 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false
 });
 
-const REDFISH_BASE_URL = process.env.REDFISH_BASE_URL;
-const ILO_USERNAME = process.env.ILO_USERNAME;
-const ILO_PASSWORD = process.env.ILO_PASSWORD;
+// Hapus tanda kutip (") jika file .env di-load secara literal oleh Docker
+const REDFISH_BASE_URL = (process.env.REDFISH_BASE_URL || '').replace(/^["']|["']$/g, '');
+const ILO_USERNAME = (process.env.ILO_USERNAME || '').replace(/^["']|["']$/g, '');
+const ILO_PASSWORD = (process.env.ILO_PASSWORD || '').replace(/^["']|["']$/g, '');
 
 // Axios instance with basic auth & https agent
 const axiosClient = axios.create({

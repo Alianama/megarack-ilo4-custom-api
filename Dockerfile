@@ -15,6 +15,7 @@ COPY . .
 
 # Expose port
 EXPOSE 3030
+ENV PORT=3030
 
 # Jalankan app
 CMD ["node", "index.js"]
